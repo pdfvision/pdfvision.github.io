@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Vision - Smart Image to PDF Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:#f5f7fb;
+      color:#1f2937;
+      line-height:1.6;
+    }
+
+    a{
+      text-decoration:none;
+    }
+
+    .container{
+      width:90%;
+      max-width:1200px;
+      margin:auto;
+    }
+
+    /* HERO */
+    .hero{
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      color:white;
+      padding:90px 0 100px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:rgba(255,255,255,0.08);
+      border-radius:50%;
+      top:-150px;
+      right:-120px;
+    }
+
+    .hero-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:50px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-text{
+      flex:1;
+      min-width:320px;
+    }
+
+    .hero-text h1{
+      font-size:58px;
+      font-weight:800;
+      line-height:1.1;
+      margin-bottom:24px;
+    }
+
+    .hero-text p{
+      font-size:18px;
+      opacity:0.95;
+      margin-bottom:30px;
+      max-width:620px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:15px 28px;
+      border-radius:14px;
+      font-weight:600;
+      transition:0.3s ease;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:white;
+      color:#2563eb;
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      border:1px solid rgba(255,255,255,0.4);
+      color:white;
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,0.1);
+    }
+
+    .hero-image{
+      flex:1;
+      min-width:320px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .phone{
+      width:320px;
+      background:white;
+      border-radius:40px;
+      padding:18px;
+      box-shadow:0 30px 60px rgba(0,0,0,0.2);
+    }
+
+    .screen{
+      background:#eef2ff;
+      border-radius:28px;
+      padding:25px;
+      height:620px;
+      position:relative;
+    }
+
+    .scan-card{
+      background:white;
+      border-radius:20px;
+      padding:18px;
+      box-shadow:0 12px 25px rgba(37,99,235,0.12);
+      margin-bottom:18px;
+    }
+
+    .scan-preview{
+      height:170px;
+      background:linear-gradient(135deg,#dbeafe,#c7d2fe);
+      border-radius:16px;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#2563eb;
+      font-weight:700;
+      font-size:18px;
+    }
+
+    .small-bar{
+      height:10px;
+      background:#dbeafe;
+      border-radius:999px;
+      margin-top:10px;
+    }
+
+    /* FEATURES */
+    .section{
+      padding:90px 0;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .section-title h2{
+      font-size:42px;
+      margin-bottom:16px;
+      color:#111827;
+    }
+
+    .section-title p{
+      color:#6b7280;
+      max-width:760px;
+      margin:auto;
+      font-size:18px;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:28px;
+    }
+
+    .feature-card{
+      background:white;
+      border-radius:24px;
+      padding:35px 28px;
+      box-shadow:0 10px 30px rgba(15,23,42,0.06);
+      transition:0.3s ease;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-8px);
+    }
+
+    .icon{
+      width:64px;
+      height:64px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:30px;
+      margin-bottom:24px;
+    }
+
+    .feature-card h3{
+      font-size:24px;
+      margin-bottom:14px;
+    }
+
+    .feature-card p{
+      color:#6b7280;
+    }
+
+    /* STEPS */
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+      margin-top:50px;
+    }
+
+    .step{
+      background:white;
+      padding:35px 28px;
+      border-radius:24px;
+      text-align:center;
+      box-shadow:0 10px 30px rgba(15,23,42,0.06);
+    }
+
+    .step-number{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      color:white;
+      font-size:28px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 22px;
+    }
+
+    .step h3{
+      margin-bottom:14px;
+      font-size:22px;
+    }
+
+    .step p{
+      color:#6b7280;
+    }
+
+    /* CTA */
+    .cta{
+      background:linear-gradient(135deg,#111827,#1e3a8a);
+      color:white;
+      border-radius:32px;
+      padding:70px 40px;
+      text-align:center;
+    }
+
+    .cta h2{
+      font-size:44px;
+      margin-bottom:18px;
+    }
+
+    .cta p{
+      max-width:760px;
+      margin:0 auto 30px;
+      color:rgba(255,255,255,0.85);
+      font-size:18px;
+    }
+
+    footer{
+      text-align:center;
+      padding:35px 20px;
+      color:#6b7280;
+      font-size:15px;
+    }
+
+    @media(max-width:768px){
+
+      .hero{
+        padding:70px 0;
+      }
+
+      .hero-text h1{
+        font-size:42px;
+      }
+
+      .section-title h2{
+        font-size:34px;
+      }
+
+      .cta h2{
+        font-size:34px;
+      }
+
+      .phone{
+        width:100%;
+        max-width:340px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+
+      <div class="hero-text">
+        <h1>Turn Images Into Professional PDFs Instantly</h1>
+
+        <p>
+          PDF Vision is a powerful image-to-PDF scanner designed for modern work and study.
+          Easily scan receipts, contracts, notes, invoices, and documents with intelligent edge detection,
+          perspective correction, and crystal-clear PDF export — all from your phone.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary">Download Now</a>
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="phone">
+          <div class="screen">
+
+            <div class="scan-card">
+              <div class="scan-preview">Smart Document Scan</div>
+              <strong>Receipt.pdf</strong>
+              <div class="small-bar"></div>
+              <div class="small-bar" style="width:70%"></div>
+            </div>
+
+            <div class="scan-card">
+              <div class="scan-preview">Lecture Notes</div>
+              <strong>Class Notes.pdf</strong>
+              <div class="small-bar"></div>
+              <div class="small-bar" style="width:60%"></div>
+            </div>
+
+            <div class="scan-card">
+              <div class="scan-preview">Contract Scan</div>
+              <strong>Business Contract.pdf</strong>
+              <div class="small-bar"></div>
+              <div class="small-bar" style="width:80%"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Core Features</h2>
+        <p>
+          Built for professionals, students, and freelancers who want a faster,
+          cleaner, and smarter paperless workflow.
+        </p>
+      </div>
+
+      <div class="features">
+
+        <div class="feature-card">
+          <div class="icon">📸</div>
+          <h3>Smart Scanning</h3>
+          <p>
+            Capture documents with your camera and let PDF Vision automatically detect edges,
+            remove messy backgrounds, optimize colors, and create scanner-quality PDFs instantly.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🖼️</div>
+          <h3>Image to PDF</h3>
+          <p>
+            Import one or multiple images from your gallery, rearrange them freely,
+            and convert everything into high-quality PDF files in just seconds.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">📁</div>
+          <h3>Simple File Management</h3>
+          <p>
+            Rename, organize, and delete PDFs with ease. All your recent documents
+            are neatly stored in one place for quick access anytime.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section" style="background:#eef2ff;">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Create PDFs in 3 Easy Steps</h2>
+        <p>
+          Fast, intuitive, and efficient — your mobile office starts here.
+        </p>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Select Images</h3>
+          <p>
+            Choose the images or documents you want to convert directly from your device.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Upload Instantly</h3>
+          <p>
+            Tap the upload button to quickly import your selected files into PDF Vision.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Export as PDF</h3>
+          <p>
+            Confirm your file list and export polished, high-quality PDF documents instantly.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+
+        <h2>Your Pocket PDF Scanner</h2>
+
+        <p>
+          Say goodbye to bulky scanners and cluttered desks.
+          With PDF Vision, every scan becomes smooth, fast, and professional.
+          Boost your productivity and embrace lightweight mobile work today.
+        </p>
+
+        <a href="#" class="btn btn-primary">Start Your Paperless Journey</a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 PDF Vision. All Rights Reserved.
+  </footer>
+
+</body>
+</html>
