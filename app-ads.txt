@@ -145,6 +145,12 @@ themediagrid.com, ws2d8n, RESELLER, 35d5010d7789b49d
 thunder-monetize.com, 4818959194, RESELLER
 jcprog.com, pub-4518750432, RESELLER
 lunamedia.io, 2fdb16a1-5025-4c41-9b17-e01e47ebc8b4, RESELLER, 524ecb396915caaf
+pubmatic.com, 163117, RESELLER, 5d62403b186f2ace
+ogury.com, 065d4ff5-a269-44be-9634-9d4d7af2dfc3, RESELLER
+smartadserver.com, 4972, RESELLER, 060d053dcf45cbf3
+onlinemediasolutions.com, 23120, RESELLER, b3868b187e4b6402
+brightcom.com, 23120, RESELLER
+adform.com, 3400, RESELLER, 9f5210a2f0999e32
 
 //Liftoff
 vungle.com,6a02a20c52f0b565467040bf,DIRECT,c107d686becd2d77
